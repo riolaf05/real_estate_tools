@@ -1,13 +1,12 @@
 from tools.google_places_api import search_places, get_latitude_longitude, get_near_places
 from dotenv import load_dotenv
 load_dotenv(override=True)
-import os
 
 from langchain.agents import AgentExecutor, create_openai_tools_agent
 from langchain_openai import ChatOpenAI
 from langchain.tools import BaseTool, StructuredTool, tool
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
-
+import os
 import streamlit as st
 
 # Tool setup
@@ -16,6 +15,10 @@ toolkit = [
     get_latitude_longitude,
     get_near_places
 ]
+
+# secrets
+os.environ["OPENAI_API_KEY"] = st.secrets["OPENAI_API_KEY"]
+os.environ["GPLACES_API_KEY"] = st.secrets["GPLACES_API_KEY"]
 
 llm = ChatOpenAI(model="gpt-4o", temperature=0.0, max_tokens=1000)
 
